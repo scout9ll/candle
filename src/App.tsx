@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import { CandleEle } from './components/Candle';
+import CandleEle from './components/Candle';
 
 
 function App() {

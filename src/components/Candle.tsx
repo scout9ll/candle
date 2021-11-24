@@ -1,18 +1,9 @@
 import React from 'react'
-import { useCandle } from '../hooks/useCandle'
+import useCandle from '../hooks/useCandle'
 import './Candle.scss'
 
-export interface CandleProps {
-    tag?: string
-    head?: number
-    bottom?: number
-    length?: number
-    trace?: string
-}
 
-
-
-export function CandleEle() {
+export default function CandleEle() {
     const [currentCandleInfo, setCandleStart, setCandleEnd] = useCandle()
     const isBurning = !!currentCandleInfo.head && !currentCandleInfo.bottom
     function onLightCandle(e: React.KeyboardEvent<HTMLInputElement>) {

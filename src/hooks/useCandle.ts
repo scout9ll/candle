@@ -13,7 +13,7 @@ interface Candle {
 
 
 
-export function useCandle(): [Candle, (tag: string) => void, (trace: string) => void] {
+export default function useCandle(): [Candle, (tag: string) => void, (trace: string) => void] {
     const [currentCandleInfo, setCurrentCandleInfo] = useState<Candle>({})
     const durationInterval = useRef(0)
     useEffect(() => {
