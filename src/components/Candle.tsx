@@ -36,11 +36,11 @@ export default function CandleEle() {
                         isBurning ?
                             (<span className="light-text">I have been burning <span className="light-tag-text">{currentCandleInfo.tag}</span> for <span className="light-time-text">{currentCandleInfo.length}</span> seconds</span>)
                             :
-                            (<><span className="light-text">I am lighting</span><input type="text" className="light-input" onKeyDown={onLightCandle} disabled={isBurning} /></>)
+                            (<><span className="light-text">I am lighting </span><input type="text" className="light-input" onKeyDown={onLightCandle} disabled={isBurning} /></>)
                     }
                 </div>
-                {isBurning && (<div className="putoff-input__contanier">
-                    <input type="text" className="light-input" onKeyDown={onPutoffCandle} /><span className="putoff-text">is engraved on the candle's body</span>
+                {isBurning && (<div className="putoff-input__contanier">    
+                    '<input type="text" className="light-input" onKeyDown={onPutoffCandle} /><span className="putoff-text">' is engraved on the candle's body</span>
                 </div>)}
             </div>
         </div>
