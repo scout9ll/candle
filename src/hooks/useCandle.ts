@@ -17,18 +17,21 @@ export default function useCandle(): [Candle, (tag: string) => void, (trace: str
     const [currentCandleInfo, setCurrentCandleInfo] = useState<Candle>({})
     const durationInterval = useRef(0)
     useEffect(() => {
-        const candleList = CandleService.getCandleList()
-        const lastCandle = candleList[candleList.length - 1] || {}
+        const candleInit = async () => {
+            const candleList = await CandleService.getCandleList()
+            const lastCandle = candleList[candleList.length - 1] || {}
 
 
-        if (lastCandle.head && !lastCandle.bottom) {
-            setCurrentCandleInfo(lastCandle)
-            durationInterval.current = window.setInterval(() => {
-                setCurrentCandleInfo(info => { return { ...info, length: getDurationByStartTime((lastCandle.head as number)) } })
-            }, 1000)
-        } else {
-            setCurrentCandleInfo({})
+            if (lastCandle.head && !lastCandle.bottom) {
+                setCurrentCandleInfo(lastCandle)
+                durationInterval.current = window.setInterval(() => {
+                    setCurrentCandleInfo(info => { return { ...info, length: getDurationByStartTime((lastCandle.head as number)) } })
+                }, 1000)
+            } else {
+                setCurrentCandleInfo({})
+            }
         }
+        candleInit()
     }, [])
 
     function setCandleStart(tag: string) {

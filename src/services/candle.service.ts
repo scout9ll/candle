@@ -1,3 +1,4 @@
+import myTcbService from "./tcb.serivice"
 
 interface Candle {
     tag?: string
@@ -12,20 +13,31 @@ class CandleService {
     // constructor() {
 
     // }
-    static addCandle(candle: Candle) {
-        const candleList = CandleService.getCandleList()
-        candleList.push(candle)
-        localStorage.setItem(CandleService.itemTag, JSON.stringify(candleList))
+    static async addCandle(candle: Candle) {
+        const { uid } = await myTcbService.getUserInfo()
+        return myTcbService.getCollection('candles').add({ ...candle, uid })
     }
 
-    static updateCandle(candle: Candle) {
-        const candleList = CandleService.getCandleList()
-        candleList[candleList.length - 1] = candle
-        localStorage.setItem(CandleService.itemTag, JSON.stringify(candleList))
+    static async updateCandle(candle: Candle) {
+        console.log('updateCandle', candle)
+        return myTcbService.getCollection('candles').where({
+            head: candle.head
+        }).update({
+            bottom: candle.bottom,
+            length: candle.length,
+            trace: candle.trace
+        }).then((res) => {
+            console.log(res.code);
+        });
     }
-    static getCandleList(): Candle[] {
-        const candleListString = localStorage.getItem(CandleService.itemTag) || '[]'
-        return JSON.parse(candleListString)
+    static async getCandleList(): Promise<Candle[]> {
+        const { uid } = await myTcbService.getUserInfo()
+
+        const { data } = await myTcbService.getCollection('candles').where({
+            uid: uid
+        }).get()
+        console.log(data)
+        return data
     }
 }
 
